@@ -1,4 +1,4 @@
-# Spring Boot Camel REST / SQL QuickStart
+# Spring Boot Camel REST / SQL Example
 
 This example demonstrates how to use SQL via JDBC along with Camel's REST DSL to expose a RESTful API.
 
@@ -21,7 +21,7 @@ The example can be run locally using the following Maven goal:
 
 Alternatively, you can run the application locally using the executable JAR produced:
 
-    $ java -jar -Dspring.profiles.active=dev target/spring-boot-camel-rest-sql-1.0-SNAPSHOT.jar
+    $ java -jar -Dspring.profiles.active=dev target/fis-rest-1.0.jar
 
 This uses an embedded in-memory HSQLDB database. You can use the default Spring Boot profile in case you have a MySQL server available for you to test.
 
@@ -34,7 +34,11 @@ You can then access the REST API directly from your Web browser, e.g.:
 
 It is assumed a Kubernetes / OpenShift platform is already running. If not, you can find details how to [get started](http://fabric8.io/guide/getStarted/index.html).
 
-Besides, it is assumed that a MySQL service is already running on the platform. You can deploy it using the provided deployment by executing in Kubernetes:
+Build project using containerized profile:
+
+    $ mvn spring-boot:run
+
+It is assumed that a MySQL service is already running on the platform. You can deploy it using the provided deployment by executing in Kubernetes:
 
     $ kubectl create -f mysql-deployment.yml
 
@@ -107,9 +111,6 @@ You can find more details about running this [quickstart](http://fabric8.io/guid
 
 ### Improvements
 
-Better separate of concerns 
+Better separate of concerns
 Complete REST CRUD
 Profile to isolate containerized version
-
-
-
