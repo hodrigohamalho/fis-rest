@@ -27,15 +27,15 @@ This uses an embedded in-memory HSQLDB database. You can use the default Spring 
 
 You can check the api swagger documentation in:
 
-http://localhost:8080
+http://0.0.0.0:8080
 
 You can then access the REST API directly from your Web browser, e.g.:
 
-- GET: http://localhost:8080/api/orders
-- GET: http://localhost:8080/api/orders/{id}
-- PUT: http://localhost:8080/api/orders
-- DELETE: http://localhost:8080/api/orders
-- POST: http://localhost:8080/api/orders
+- GET: http://0.0.0.0:8080/api/orders
+- GET: http://0.0.0.0:8080/api/orders/{id}
+- PUT: http://0.0.0.0:8080/api/orders
+- DELETE: http://0.0.0.0:8080/api/orders
+- POST: http://0.0.0.0:8080/api/orders
 
 ```
 {
@@ -114,21 +114,14 @@ The example automatically creates new orders with a running order `id` starting 
 
 You can then access these services from your Web browser, e.g.:
 
-- <http://qs-camel-rest-sql.vagrant.f8/camel-rest-sql/books>
-- <http://qs-camel-rest-sql.vagrant.f8/camel-rest-sql/books/order/1>
+- <http://qs-camel-rest-sql.vagrant.f8/api/books>
+- <http://qs-camel-rest-sql.vagrant.f8/api/books/order/1>
 
 ### Swagger API
 
-The example provides API documentation of the service using Swagger using the _context-path_ `camel-rest-sql/api-doc`. You can access the API documentation from your Web browser at <http://qs-camel-rest-sql.vagrant.f8/camel-rest-sql/api-doc>.
+The example provides API documentation of the service using Swagger using the _context-path_ `camel-rest-sql/api-doc`. You can access the API documentation from your Web browser at <http://qs-camel-rest-sql.vagrant.f8/api/api-doc>.
 
 ### More details
 
 You can find more details about running this [quickstart](http://fabric8.io/guide/quickstarts/running.html) on the website. This also includes instructions how to change the Docker image user and registry.
-
-
-### Improvements
-
-Better separate of concerns
-Complete REST CRUD
-Profile to isolate containerized version
 

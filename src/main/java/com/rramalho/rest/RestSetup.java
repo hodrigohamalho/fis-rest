@@ -31,15 +31,14 @@ public class RestSetup extends RouteBuilder{
 	@Override
 	public void configure() {
 		restConfiguration()
-			.contextPath(apiContext).apiContextPath("/api-doc")			
+			.contextPath(apiContext).apiContextPath("/api-doc")
+			.host(apiDocHost)
+			.port(apiDocPort)	
 			.apiProperty("api.title", "Order REST API")
 			.apiProperty("api.version", "1.0")
-			// .apiProperty("cors", "true")
+			.apiProperty("cors", "true")
 			.apiContextRouteId("doc-api")
-			// .enableCORS(true)
 			.component("servlet")
-			// .corsHeaderProperty("Access-Control-Allow-Headers", "Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers,CustomHeader1, CustomHeader2")
-
 			.bindingMode(RestBindingMode.json);
 	}
 	
