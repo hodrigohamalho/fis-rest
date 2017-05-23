@@ -1,4 +1,5 @@
 .settings
+.vscode
 target
 .project
 .classpath

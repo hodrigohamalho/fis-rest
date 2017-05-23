@@ -1,7 +1,7 @@
 camel:
   springboot:
     # The Camel context name
-    name: CamelRestSql
+    name: FisRest
 
 # Binding health checks to a different port
 management:
@@ -26,3 +26,9 @@ spring:
 quickstart:
   generateOrderPeriod: 2s
   processOrderPeriod: 5s
+
+apiContext: /api
+
+apidoc:
+  host: 0.0.0.0
+  port: ${server.port}

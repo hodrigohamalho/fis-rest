@@ -35,3 +35,9 @@ spring:
 quickstart:
   generateOrderPeriod: 10s
   processOrderPeriod: 30s
+
+apiContext: /api
+
+apidoc:
+  host: 0.0.0.0
+  port: ${server.port}

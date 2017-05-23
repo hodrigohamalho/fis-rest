@@ -25,10 +25,27 @@ Alternatively, you can run the application locally using the executable JAR prod
 
 This uses an embedded in-memory HSQLDB database. You can use the default Spring Boot profile in case you have a MySQL server available for you to test.
 
+You can check the api swagger documentation in:
+
+http://localhost:8080
+
 You can then access the REST API directly from your Web browser, e.g.:
 
-- <http://localhost:8080/camel-rest-sql/books>
-- <http://localhost:8080/camel-rest-sql/books/order/1>
+- GET: http://localhost:8080/api/orders
+- GET: http://localhost:8080/api/orders/{id}
+- PUT: http://localhost:8080/api/orders
+- DELETE: http://localhost:8080/api/orders
+- POST: http://localhost:8080/api/orders
+
+```
+{
+	"id": 0,
+	"item": "Inserting a order",
+	"amount": 2,
+	"description": "Testing order insert",
+	"processed": true
+}
+```
 
 ### Running the example in Kubernetes / OpenShift
 
@@ -114,3 +131,4 @@ You can find more details about running this [quickstart](http://fabric8.io/guid
 Better separate of concerns
 Complete REST CRUD
 Profile to isolate containerized version
+

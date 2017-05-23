@@ -5,27 +5,26 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class OrderREST extends RouteBuilder{
+
+	private String ds = "?dataSource=dataSource";
+	private String selectAll = "sql:select * from orders" + ds;
+	private String selectCount = "sql:select count(*) from orders" + ds;
+	private String selectById = "sql:select * from orders where " +
+								"id = :#${header.id}&" +
+								"outputClass=com.rramalho.rest.Order" + ds;
+	private String insertOrder = "sql:insert into orders (item, amount, description, processed) values " +
+    	                		"(:#${body.item}, :#${body.amount}, :#${body.description}, false)"+ ds;
+	private String updateOrder = "sql:update orders set "
+						+ "item = :#${body.item}, "
+						+ "amount = :#${body.amount}, "
+						+ "description = :#${body.description}, "
+						+ "processed = :#${body.processed} " +
+						"where id = :#${body.id}" + ds;		  
+	private String deleteOrder = "sql:delete from orders where id = :#${header.id}" + ds;              
+
 	
     @Override
-    public void configure() {
-        // A first route generates some orders and queue them in DB
-//        from("timer:new-order?delay=1s&period={{quickstart.generateOrderPeriod:2s}}")
-//            .routeId("generate-order")
-//            .bean("orderService", "generateOrder")
-//            .to("sql:insert into orders (id, item, amount, description, processed) values " +
-//                "(:#${body.id} , :#${body.item}, :#${body.amount}, :#${body.description}, false)?" +
-//                "dataSource=dataSource")
-//            .log("Inserted new order ${body.id}");
-//
-//        // A second route polls the DB for new orders and processes them
-//        from("sql:select * from orders where processed = false?" +
-//            "consumer.onConsume=update orders set processed = true where id = :#id&" +
-//            "consumer.delay={{quickstart.processOrderPeriod:5s}}&" +
-//            "dataSource=dataSource")
-//            .routeId("process-order")
-//            .bean("orderService", "rowToOrder")
-//            .log("Processed order #id ${body.id} with ${body.amount} copies of the «${body.description}» book");
-        
+    public void configure() {       
     	onException(java.sql.SQLIntegrityConstraintViolationException.class)
 	    	.handled(true)
 	    	.setBody(simple("Order id already registered"));
@@ -34,51 +33,35 @@ public class OrderREST extends RouteBuilder{
 
 	    	.get("/").description("List orders")
 				.route().routeId("orders-list")
-				.to("sql:select * from orders?" +
-						"dataSource=dataSource")
+				.to(selectAll)
 				.endRest()
 			
 			.get("order/{id}").description("Details of an order by id")
 				.route().routeId("order-api")
-				.to("sql:select * from orders where id = :#${header.id}?" +
-						"dataSource=dataSource&" +
-						"outputClass=com.rramalho.rest.Order")
+				.to(selectById)
 				.endRest()
 
     		.post("/").type(Order.class).description("Create a new Book")
-    			.route().routeId("insert-order")
-    			.log("inserting new order ${body}")
-    			.to("sql:insert into orders (id, item, amount, description, processed) values " +
-    	                "(:#${body.id} , :#${body.item}, :#${body.amount}, :#${body.description}, false)?" +
-    	                "dataSource=dataSource")
-    			.log("Inserted new order ${body.id}")
+    			.route().routeId("insert-order").tracing()			
+				// .setHeader("CamelSqlRetrieveGeneratedKeys", constant(true)) // For some reason it doesn't work
+				// if it works the sql to retrieve the count will be not necessary
+    			.log("inserting new order ${body}")			
+				.transacted()	
+    			.to(insertOrder)				    			 
+				.to(selectCount)				
+				.setHeader("id").javaScript("exchange.in.body[0]['C1'] - 1")			
+				.to("sql:select * from orders where id=:#${header.id}" +ds)
     			.endRest()
     			
 			.put("/").type(Order.class).description("Update a order")
 	    		.route().routeId("update-order")
 				.log("Updating order ${body}")
-				.to("sql:update orders set "
-						+ "item = :#${body.item}, "
-						+ "amount = :#${body.amount}, "
-						+ "description = :#${body.description}, "
-						+ "processed = :#${body.processed} " +
-						"where id = :#${body.id}?" +
-		                "dataSource=dataSource").endRest()
+				.to(updateOrder).endRest()
     			
     		.delete("/{id}").description("Delete a order")
 	    		.route().routeId("delete-order")
 				.log("deleting order ${header.id}")
-				.to("sql:delete from orders where id = :#${header.id}?"+
-					"dataSource=dataSource")
+				.to(deleteOrder)
 				.endRest();
 	}
 }
-
-//JSON to TEST POST
-//{
-//	"id": 0,
-//	"item": "Inserting",
-//	"amount": 2,
-//	"description": "Testing book insert",
-//	"processed": true
-//}
