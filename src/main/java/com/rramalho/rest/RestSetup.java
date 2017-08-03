@@ -39,6 +39,7 @@ public class RestSetup extends RouteBuilder{
 			.apiProperty("cors", "true")
 			.apiContextRouteId("doc-api")
 			.component("servlet")
+			.enableCORS(true)
 			.bindingMode(RestBindingMode.json);
 	}
 	

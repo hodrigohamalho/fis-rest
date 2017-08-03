@@ -1,10 +1,9 @@
 package com.rramalho.rest;
 
-import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
 
 @Component
-public class OrderREST extends RouteBuilder{
+public class OrderREST extends GlobosatRouter{
 
 	private String ds = "?dataSource=dataSource";
 	private String selectAll = "sql:select * from orders" + ds;
@@ -42,11 +41,14 @@ public class OrderREST extends RouteBuilder{
 				.endRest()
 
     		.post("/").type(Order.class).description("Create a new Book")
-    			.route().routeId("insert-order").tracing()			
+    			.route().routeId("insert-order").tracing()
+//    			.log("${body.id}")
+//    			.log("${header.id}")
+//    			.to("bean:orderService?method=createOrder")
 				// .setHeader("CamelSqlRetrieveGeneratedKeys", constant(true)) // For some reason it doesn't work
 				// if it works the sql to retrieve the count will be not necessary
     			.log("inserting new order ${body}")			
-				.transacted()	
+//				.transacted()	
     			.to(insertOrder)				    			 
 				.to(selectCount)				
 				.setHeader("id").javaScript("exchange.in.body[0]['C1'] - 1")			

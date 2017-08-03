@@ -15,11 +15,11 @@
  */
 package com.rramalho.rest;
 
-import org.springframework.stereotype.Component;
-
 import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import org.springframework.stereotype.Component;
 
 @Component
 public class OrderService {
@@ -27,6 +27,12 @@ public class OrderService {
     private final AtomicInteger counter = new AtomicInteger();
 
     private final Random amount = new Random();
+    
+    public String createOrder(Order order){
+    	System.out.println("TA NULO NAO: "+ order.getAmount());
+    	
+		return "order: "+order.getId();
+    }
 
     public Order generateOrder() {
         Order order = new Order();
