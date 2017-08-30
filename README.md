@@ -1,6 +1,6 @@
-# Spring Boot Camel REST / SQL Example
+# Spring Boot Camel REST / CRUD Example
 
-This example demonstrates how to use SQL via JDBC along with Camel's REST DSL to expose a RESTful API.
+This example demonstrates a CRUD API usig Camel REST DSL with persistence in database.
 
 This example relies on the [Fabric8 Maven plugin](https://maven.fabric8.io) for its build configuration
 and uses the [fabric8 Java base image](https://github.com/fabric8io/base-images#java-base-images).
@@ -10,8 +10,6 @@ and uses the [fabric8 Java base image](https://github.com/fabric8io/base-images#
 The example can be built with:
 
     $ mvn install
-
-This automatically generates the application resource descriptors and builds the Docker image, so it requires access to a Docker daemon, relying on the `DOCKER_HOST` environment variable by default.
 
 ### Running the example locally
 
@@ -39,7 +37,6 @@ You can then access the REST API directly from your Web browser, e.g.:
 
 ```
 {
-	"id": 0,
 	"item": "Inserting a order",
 	"amount": 2,
 	"description": "Testing order insert",
