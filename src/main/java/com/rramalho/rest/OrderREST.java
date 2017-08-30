@@ -1,9 +1,10 @@
 package com.rramalho.rest;
 
+import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
 
 @Component
-public class OrderREST extends GlobosatRouter{
+public class OrderREST extends RouteBuilder{
 
 	private String ds = "?dataSource=dataSource";
 	private String selectAll = "sql:select * from orders" + ds;
