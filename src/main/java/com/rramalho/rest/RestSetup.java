@@ -32,7 +32,7 @@ public class RestSetup extends RouteBuilder{
 	public void configure() {
 		restConfiguration()
 			.contextPath(apiContext).apiContextPath("/api-doc")
-			.host(apiDocHost)
+			.host("")
 			.port(apiDocPort)	
 			.apiProperty("api.title", "Order REST API")
 			.apiProperty("api.version", "1.0")
