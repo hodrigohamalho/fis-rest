@@ -43,14 +43,12 @@ public class OrderREST extends RouteBuilder{
 
     		.post("/").type(Order.class).description("Create a new Book")
     			.route().routeId("insert-order").tracing()
-//    			.log("${body.id}")
-//    			.log("${header.id}")
 //    			.to("bean:orderService?method=createOrder")
 				// .setHeader("CamelSqlRetrieveGeneratedKeys", constant(true)) // For some reason it doesn't work
 				// if it works the sql to retrieve the count will be not necessary
     			.log("inserting new order ${body}")			
-//				.transacted()	
-    			.to(insertOrder)				    			 
+    			.to(insertOrder)
+				// this lines are necessary because the CamelSqlRetrieveGeneratedKeys was not set.
 				.to(selectCount)				
 				.setHeader("id").javaScript("exchange.in.body[0]['C1'] - 1")			
 				.to("sql:select * from orders where id=:#${header.id}" +ds)
