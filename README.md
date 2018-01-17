@@ -1,4 +1,4 @@
-# Spring Boot Camel REST / CRUD Example
+# CRUD REST example using Fuse Integration Services (Spring Boot)
 
 This example demonstrates a CRUD API usig Camel REST DSL with persistence in database.
 
