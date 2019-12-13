@@ -10,8 +10,8 @@ public class OrderREST extends RouteBuilder{
 	private String selectAll = "sql:select * from orders" + ds;
 	private String selectCount = "sql:select count(*) from orders" + ds;
 	private String selectById = "sql:select * from orders where " +
-								"id = :#${header.id}&" +
-								"outputClass=com.rramalho.rest.Order" + ds;
+								"id = :#${header.id}" + ds +
+								"&outputClass=com.rramalho.rest.Order";
 	private String insertOrder = "sql:insert into orders (item, amount, description, processed) values " +
     	                		"(:#${body.item}, :#${body.amount}, :#${body.description}, false)"+ ds;
 	private String updateOrder = "sql:update orders set "
